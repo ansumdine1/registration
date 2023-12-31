@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Firestore Data Storage</title>
+    <!-- Add Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+
+<body>
+
+    <h1>Firestore Data Storage</h1>
+
+    <form id="dataForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // Your Firebase project configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBLGeKyQ1B_2Xf9ruz9n2iOQmN455XLZYY",
+            authDomain: "data-77e41.firebaseapp.com",
+            projectId: "data-77e41",
+            storageBucket: "data-77e41.appspot.com",
+            messagingSenderId: "286967401661",
+            appId: "1:286967401661:web:e81f5ffac0e792b64cfbd4",
+            measurementId: "G-QT5653FCGC"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Get a reference to the Firestore database
+        var db = firebase.firestore();
+
+        // Function to handle form submission
+        document.getElementById('dataForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get user input values
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+
+            // Add data to Firestore
+            db.collection("users").add({
+                name: name,
+                email: email
+            })
+                .then(function (docRef) {
+                    console.log("Document written with ID: ", docRef.id);
+                    // Clear form fields after successful submission
+                    document.getElementById('name').value = '';
+                    document.getElementById('email').value = '';
+
+                })
+                .catch(function (error) {
+                    console.error("Error adding document: ", error);
+                });
+        });
+    </script>
+
+</body>
+
+</html>
